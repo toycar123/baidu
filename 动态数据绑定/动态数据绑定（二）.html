@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">
+		function Observer(obj){
+			this.data=obj;
+			this.walk(obj);
+			this.$watch=function(n,fn){
+				return this.option=fn;
+			};
+		}
+		let p=Observer.prototype;
+		p.walk=function(obj){
+			for(let key in obj){
+				if(obj.hasOwnProperty(key)){
+					val=obj[key];
+					if(typeof val==="object"){
+						new Observer(val);
+					}else{
+						this.convert(key,val);
+					}
+				}
+			}
+		}
+		p.convert=function(key,val){
+			var that=this;
+			Object.defineProperty(this.data,key,{
+				enumerable:true,
+				configurable:true,
+				get:function(){
+					console.log("你访问了"+key);
+					return val;
+				},
+				set:function(newVal){
+					console.log("你设置了"+key);
+					console.log("新的"+key+"="+newVal);
+					if(that.option){
+						that.option(newVal);
+					}
+					if(typeof newVal==="object"){
+						new Observer(newVal);
+					}
+					if(newVal===val){
+						return;
+					}else{
+						val=newVal;
+					}
+				}
+			})
+		};
+		let obj={
+			a: 1,
+			b: 2,
+			c: {
+				d: 3,
+				e: 4
+			}
+		};
+		let app=new Observer(obj);
+		app.data.c.d;
+
+		let app1=new Observer({
+			name:"youngwind",
+			age:25
+		});
+		app1.data.name={
+			lastName:"liang",
+			firstName:"shaofeng"
+		}
+		app1.data.name.lastName;
+		app1.data.name.firstName="lalala";
+		
+    	app1.$watch('age', function(age) {
+        	console.log(`我的年纪变了，现在已经是：${age}岁了`)
+    	});
+		app1.data.age = 100;
+	</script>
+</body>
+</html>
