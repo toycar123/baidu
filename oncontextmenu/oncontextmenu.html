@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		div#menu {
+			background-color: #F6EAEA;
+			display: none;
+			position: absolute;
+			z-index: 1000;
+			border: 1px solid #B3AFAF;
+			border-radius: 10px;
+		}
+		div#menu p {
+			height: 50px;
+			width: 100px;
+			line-height: 50px;
+			text-align: center;
+			cursor: pointer;
+		}
+		div#menu p:hover {
+			color: #D3CDCD;
+		}
+		#area {
+			background-color: #E5DDDD;
+			height: 100px;
+			line-height: 100px;
+			text-align: center;
+		}
+		
+	</style>
+</head>
+<body>
+	<p id="area">Click here to see the menu</p>
+	<div id="menu">
+		<p>Menu Item1</p>
+		<p>Menu Item2</p>
+	</div>
+	<script type="text/javascript">
+		var menu=document.getElementById("menu"),
+			menustyle=getComputedStyle(menu).display;
+
+		function newMenuPosition(x,y){
+			if(window.innerWidth-x<100){
+				menu.style.left=parseInt(x)-110+"px";
+			}else{
+				menu.style.left=parseInt(x)+10+"px";
+			}
+			if(window.innerHeight-y<100){
+				menu.style.top=parseInt(y)-160+"px";
+			}else{
+				menu.style.top=parseInt(y)+10+"px";
+			}
+		}
+
+		function styleNone(){
+			menu.style.display="none";
+		}
+		function styleBlock(e){
+			e.stopPropagation();
+			alert(e.target.innerText);
+		}
+		document.addEventListener("click",styleNone,false);
+		menu.addEventListener("click",styleBlock,true);
+
+		document.getElementById("area").oncontextmenu=function(e){
+			if(menustyle==="none"){
+				menu.style.display="block";
+				newMenuPosition(e.clientX,e.clientY);
+			}
+			return false;
+		}
+		
+
+	</script>
+</body>
+</html>
