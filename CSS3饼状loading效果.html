@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CSS3饼状loading效果</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#wrap {
+			width: 100px;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+		}
+		#outer {
+			border-radius: 50px;
+			border: 2px solid #FAB0B0;
+			border-bottom-color: transparent;
+			height: 100px;
+			width: 100px;
+			box-sizing: border-box;
+			transform-origin: 50% 50%;
+			animation: outer 1s infinite;
+		}
+		#inner1 {
+			height: 80px;
+			width: 80px;
+			background-color: #F3AEAE;
+			margin: auto;
+			border-radius: 40px;
+			position: absolute;
+			top: 10px;
+			left: 10px;
+		}
+		#inner1::before {
+			content: " ";
+			display: block;
+			height: 80px;
+			width: 40px;
+			border-top-left-radius: 40px;
+			border-bottom-left-radius: 40px;
+			background-color: #D897EC;
+			animation: before 1s infinite ;
+			transform-origin: 100% 50%;
+			z-index: 100;
+		}
+		#inner1::after {
+			content: " ";
+			display: block;
+			height: 80px;
+			width: 40px;
+			border-top-right-radius: 40px;
+			border-bottom-right-radius: 40px;
+			background-color: #D897EC;
+			position: absolute;
+			top: 0px;
+			left: 40px;
+			animation: after 1s infinite ;
+			transform-origin: 0px 40px;
+		}
+		#inner2 {
+			height: 80px;
+			width: 40px;
+			border-top-left-radius: 40px;
+			border-bottom-left-radius: 40px;
+			background-color: #F3AEAE;
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			z-index: 50;
+		}
+		@keyframes outer {
+			0% {
+				transform: rotate(0turn);
+			}
+			100% {
+				transform: rotate(1turn);
+			}
+		}
+		@keyframes before {
+			50% {
+				transform: rotate(-180deg);
+				}
+			100% {
+				transform: rotate(-180deg);
+				z-index: -100;
+			}
+		}
+		@keyframes after {
+			50% {
+				transform: rotate(0deg);
+				}
+			100% {
+				transform: rotate(-180deg);
+			}
+		}
+		
+	</style>
+</head>
+<body>
+	<div id="wrap">
+		<div id="outer"></div>
+		<div id="inner1"></div>
+		<div id="inner2"></div>
+	</div>
+	
+</body>
+</html>
